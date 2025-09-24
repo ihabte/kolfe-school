@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>chat bot</title>
+    </head>
+    <style>
+        .chatbot-section {
+            background-color: darkcyan;
+            color: white;
+        }
+        
+        .chatbot-section .section-title {
+            color: white;
+            background-color: #444;
+        }
+        
+        .chatbot-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            align-items: center;
+            
+        }
+        
+        .chatbot-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+        }
+        
+        .chatbot-window {
+            flex: 1;
+            min-width: 300px;
+            background-color: #444;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .chat-header {
+            background: var(--secondary);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .chat-messages {
+            height: 300px;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #444;
+           
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px 15px;
+            border-radius: 20px;
+            max-width: 80%;
+             color: #ddd;
+        }
+        
+        .bot-message {
+            background: #e6e6e6;
+            color: black;
+
+
+border-bottom-left-radius: 5px;
+        }
+        
+        .user-message {
+            background: var(--primary);
+            color: white;
+            margin-left: auto;
+            border-bottom-right-radius: 5px;
+        }
+        
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px 0 0 5px;
+        }
+        
+        .chat-input button {
+            background-color: darkcyan;
+            color: white;
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+        }
+        header{
+            text-align: center;
+            padding: 25px;
+        }
+    </style>
+<body>
+<section id="chatbot" class="chatbot-section">
+        <div class="container">
+            <header><h2>Student Information Chatbot</h2></header>
+            <div class="chatbot-container">
+                <div class="chatbot-info">
+                    <h3>Connect with School Administration</h3>
+                    <p>Our student information chatbot allows parents and students to get quick answers to common questions and connect with school administration when needed.</p>
+                    <p>You can ask about academic schedules, school events, fee payments, and more. For complex issues, the chatbot will connect you directly with the appropriate school staff.</p>
+                    <p>The chatbot is available 24/7, with live support during school hours (8:00 AM - 5:00 PM, Monday to Friday).</p>
+                </div>
+                <div class="chatbot-window">
+                    <div class="chat-header">Kolfe Academy Assistant</div>
+                    <div class="chat-messages" id="chat-messages">
+                        <div class="message bot-message">Hello! I'm the Kolfe Academy assistant. How can I help you today?</div>
+                    </div>
+                    <div class="chat-input">
+                        <input type="text" id="chat-input" placeholder="Type your message here...">
+                        <button id="send-btn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+                // Chatbot functionality
+        document.getElementById('send-btn').addEventListener('click', sendMessage);
+        document.getElementById('chat-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function sendMessage() {
+            const chatInput = document.getElementById('chat-input');
+            const message = chatInput.value.trim();
+            
+            if (message === '') return;
+            
+            // Add user message to chat
+            addMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Simulate bot response after a short delay
+            setTimeout(() => {
+                const botResponse = generateBotResponse(message);
+                addMessage(botResponse, 'bot');
+            }, 1000);
+        }
+
+
+function addMessage(text, sender) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'bot-message');
+            messageDiv.textContent = text;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateBotResponse(userMessage) {
+            userMessage = userMessage.toLowerCase();
+            
+            if (userMessage.includes('fee') || userMessage.includes('payment')) {
+                return "Fee payments can be made at the school administration office from 8:00 AM to 3:00 PM, Monday to Friday. You can also pay through our bank account at Commercial Bank of Ethiopia, account number 100023456789.";
+            } else if (userMessage.includes('schedule') || userMessage.includes('time')) {
+                return "School hours are from 8:00 AM to 3:30 PM, Monday to Friday. Extracurricular activities take place from 3:30 PM to 5:00 PM.";
+            } else if (userMessage.includes('result') || userMessage.includes('grade')) {
+                return "You can check student results through our online portal. If you need assistance, please contact the academic office.";
+            } else if (userMessage.includes('contact') || userMessage.includes('phone')) {
+                return "You can reach the school administration at +251 11 123 4567 during office hours, or email info@kolfeacademy.edu.et.";
+            } else if (userMessage.includes('holiday') || userMessage.includes('break')) {
+                return "The next school break will be from December 15 to January 5. The academic calendar is available at the administration office.";
+            } else if (userMessage.includes('to cheak my child status')) {
+                return ("you can, just give me your child user name")
+                if (username == qw){
+                return"abel is good student his cumulative grade is 80 for more pleas contact us";
+                }
+            }
+           else if (userMessage.includes('hellow')){
+            return"hellow, i'am an assitance. what can i help you";
+           }
+           else{
+            return('am not programed for this, pleas tray again later or contact our call center')
+           }
+            
+        }
+    </script>
+    </body>
+    </html>

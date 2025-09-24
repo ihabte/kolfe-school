@@ -1,0 +1,565 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="po.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kolfe Excellence Academy - Student Results System</title>
+    <link rel="stylesheet" href="po.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="25" cy="25" r="25" fill="#1a4b8c"/>
+                        <path d="M25 10L32.5 20H17.5L25 10ZM35 30H15V40H35V30ZM20 25H30V35H20V25Z" fill="white"/>
+                        <circle cx="25" cy="25" r="8" stroke="white" stroke-width="2"/>
+                    </svg>
+                </div>
+                <div class="logo-text">
+                    <h1>Kolfe Excellence Academy</h1>
+                </div>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active" data-tab="parent-portal">Parent Portal</a></li>
+                    <li><a href="#" data-tab="admin-login">Admin Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Parent Portal Tab -->
+        <div id="parent-portal" class="tab-content active">
+            <h2>Parent Portal - View Student Results</h2>
+            <p>Enter your credentials to view your child's academic results.</p>
+            
+            <div id="parent-message" class="message"></div>
+            
+            <form id="parent-login-form">
+                <div class="form-group">
+                    <label for="parent-username">Parent Username</label>
+                    <input type="text" id="parent-username" placeholder="Enter your username" required>
+                </div>
+                <div class="form-group">
+                    <label for="parent-password">Password</label>
+                    <input type="password" id="parent-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">View Results</button>
+            </form>
+            
+            <div id="student-results" class="student-results">
+                <!-- Student results will be displayed here -->
+            </div>
+        </div>
+
+        <!-- Admin Login Tab -->
+        <div id="admin-login" class="tab-content">
+            <h2>Admin Login</h2>
+            <p>Administrators can login to manage student records and results.</p>
+            
+            <div id="admin-message" class="message"></div>
+            
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="admin-username">Admin Username</label>
+                    <input type="text" id="admin-username" placeholder="Enter admin username" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            
+            <div id="admin-dashboard" style="display: none;">
+                <h2>Admin Dashboard</h2>
+                
+                <div class="tabs">
+                    <div class="tab active" data-tab="manage-students">Manage Students</div>
+                    <div class="tab" data-tab="manage-results">Manage Results</div>
+                </div>
+                
+                <!-- Manage Students Tab -->
+                <div id="manage-students" class="tab-content active">
+                    <h3>Student Management</h3>
+                    <button class="btn" id="add-student-btn">Add New Student</button>
+
+
+<table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Grade</th>
+                                <th>Parent Username</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="students-table-body">
+                            <!-- Students will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Manage Results Tab -->
+                <div id="manage-results" class="tab-content">
+                    <h3>Results Management</h3>
+                    <button class="btn" id="add-result-btn">Add New Result</button>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Term</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="results-table-body">
+                            <!-- Results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Student Modal -->
+    <div id="add-student-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; width: 90%; max-width: 500px; padding: 20px; border-radius: 10px;">
+            <h3>Add New Student</h3>
+            <form id="add-student-form">
+                <div class="form-group">
+                    <label for="new-student-name">Student Name</label>
+                    <input type="text" id="new-student-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-student-grade">Grade</label>
+                    <select id="new-student-grade" required>
+                        <option value="">Select Grade</option>
+                        <option>Grade 1</option>
+                        <option>Grade 2</option>
+                        <option>Grade 3</option>
+                        <option>Grade 4</option>
+                        <option>Grade 5</option>
+                        <option>Grade 6</option>
+                        <option>Grade 7</option>
+                        <option>Grade 8</option>
+                        <option>Grade 9</option>
+                        <option>Grade 10</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="new-parent-username">Parent Username</label>
+                    <input type="text" id="new-parent-username" required>
+                </div>
+                <div class="form-group">
+                    <label for="new-parent-password">Parent Password</label>
+                    <input type="password" id="new-parent-password" required>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn">Add Student</button>
+                    <button type="button" class="btn btn-danger" id="cancel-add-student">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Result Modal -->
+
+
+<div id="add-result-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center;">
+        <div style="background: white; width: 90%; max-width: 500px; padding: 20px; border-radius: 10px;">
+            <h3>Add New Result</h3>
+            <form id="add-result-form">
+                <div class="form-group">
+                    <label for="result-student">Student</label>
+                    <select id="result-student" required>
+                        <option value="">Select Student</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="result-subject">Subject</label>
+                    <input type="text" id="result-subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="result-score">Score</label>
+                    <input type="number" id="result-score" min="0" max="100" required>
+                </div>
+                <div class="form-group">
+                    <label for="result-term">Term</label>
+                    <select id="result-term" required>
+                        <option value="">Select Term</option>
+                        <option>Term 1</option>
+                        <option>Term 2</option>
+                        <option>Term 3</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button type="submit" class="btn">Add Result</button>
+                    <button type="button" class="btn btn-danger" id="cancel-add-result">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Data storage (in a real app, this would be a database)
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        let results = JSON.parse(localStorage.getItem('results')) || [];
+        let currentAdmin = null;
+
+        // Initialize with sample data if empty
+        if (students.length === 0) {
+            students = [
+                { id: 1, name: "Michael Tesfaye", grade: "Grade 10", parentUsername: "michael_parent", parentPassword: "password123" },
+                { id: 2, name: "Sarah Bekele", grade: "Grade 9", parentUsername: "sarah_parent", parentPassword: "password123" },
+                { id: 3, name: "Daniel Girma", grade: "Grade 11", parentUsername: "daniel_parent", parentPassword: "password123" }
+            ];
+            localStorage.setItem('students', JSON.stringify(students));
+        }
+
+        if (results.length === 0) {
+            results = [
+                { id: 1, studentId: 1, subject: "Mathematics", score: 92, term: "Term 2" },
+                { id: 2, studentId: 1, subject: "Physics", score: 88, term: "Term 2" },
+                { id: 3, studentId: 2, subject: "English", score: 85, term: "Term 2" },
+                { id: 4, studentId: 3, subject: "Chemistry", score: 90, term: "Term 2" }
+            ];
+            localStorage.setItem('results', JSON.stringify(results));
+        }
+
+        // Navigation between tabs
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('nav a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Get the target tab
+                const targetTab = this.getAttribute('data-tab');
+
+
+// Hide all tab contents
+                document.querySelectorAll('.tab-content').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                
+                // Show the target tab content
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Admin dashboard tabs
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Get the target tab content
+                const targetTab = this.getAttribute('data-tab');
+                
+                // Hide all tab contents
+                document.querySelectorAll('#admin-dashboard .tab-content').forEach(tabContent => {
+                    tabContent.classList.remove('active');
+                });
+                
+                // Show the target tab content
+                document.getElementById(targetTab).classList.add('active');
+            });
+        });
+
+        // Parent login form
+        document.getElementById('parent-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('parent-username').value;
+            const password = document.getElementById('parent-password').value;
+            const messageDiv = document.getElementById('parent-message');
+            
+            // Find student with matching parent credentials
+            const student = students.find(s => s.parentUsername === username && s.parentPassword === password);
+            
+            if (student) {
+                // Show success message
+                showMessage(messageDiv, `Login successful! Showing results for ${student.name}`, 'success');
+                
+                // Display student results
+                displayStudentResults(student);
+            } else {
+                // Show error message
+                showMessage(messageDiv, 'Invalid username or password. Please try again.', 'error');
+            }
+        });
+
+        // Admin login form
+        document.getElementById('admin-login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('admin-username').value;
+            const password = document.getElementById('admin-password').value;
+            const messageDiv = document.getElementById('admin-message');
+            
+            // Simple admin authentication (in real app, this would be more secure)
+            if (username === 'admin' && password === 'password') {
+                // Show success message
+                showMessage(messageDiv, 'Admin login successful!', 'success');
+                
+                // Show admin dashboard
+                document.getElementById('admin-dashboard').style.display = 'block';
+                currentAdmin = { username: username };
+                
+                // Populate students and results tables
+                populateStudentsTable();
+                populateResultsTable();
+                populateStudentDropdown();
+            } else {
+                // Show error message
+                showMessage(messageDiv, 'Invalid admin credentials. Please try again.', 'error');
+            }
+        });
+
+        // Add student button
+        document.getElementById('add-student-btn').addEventListener('click', function() {
+            document.getElementById('add-student-modal').style.display = 'flex';
+        });
+
+
+// Cancel add student
+        document.getElementById('cancel-add-student').addEventListener('click', function() {
+            document.getElementById('add-student-modal').style.display = 'none';
+        });
+
+        // Add student form
+        document.getElementById('add-student-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('new-student-name').value;
+            const grade = document.getElementById('new-student-grade').value;
+            const parentUsername = document.getElementById('new-parent-username').value;
+            const parentPassword = document.getElementById('new-parent-password').value;
+            
+            // Create new student
+            const newStudent = {
+                id: students.length > 0 ? Math.max(...students.map(s => s.id)) + 1 : 1,
+                name: name,
+                grade: grade,
+                parentUsername: parentUsername,
+                parentPassword: parentPassword
+            };
+            
+            // Add to students array
+            students.push(newStudent);
+            localStorage.setItem('students', JSON.stringify(students));
+            
+            // Update tables
+            populateStudentsTable();
+            populateStudentDropdown();
+            
+            // Close modal and reset form
+            document.getElementById('add-student-modal').style.display = 'none';
+            this.reset();
+            
+            alert('Student added successfully!');
+        });
+
+        // Add result button
+        document.getElementById('add-result-btn').addEventListener('click', function() {
+            document.getElementById('add-result-modal').style.display = 'flex';
+        });
+
+        // Cancel add result
+        document.getElementById('cancel-add-result').addEventListener('click', function() {
+            document.getElementById('add-result-modal').style.display = 'none';
+        });
+
+        // Add result form
+        document.getElementById('add-result-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const studentId = parseInt(document.getElementById('result-student').value);
+            const subject = document.getElementById('result-subject').value;
+            const score = parseInt(document.getElementById('result-score').value);
+            const term = document.getElementById('result-term').value;
+            
+            // Create new result
+            const newResult = {
+                id: results.length > 0 ? Math.max(...results.map(r => r.id)) + 1 : 1,
+                studentId: studentId,
+                subject: subject,
+                score: score,
+                term: term
+            };
+            
+            // Add to results array
+            results.push(newResult);
+            localStorage.setItem('results', JSON.stringify(results));
+            
+            // Update results table
+            populateResultsTable();
+            
+            // Close modal and reset form
+            document.getElementById('add-result-modal').style.display = 'none';
+            this.reset();
+            
+            alert('Result added successfully!');
+        });
+
+        // Utility functions
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = `message ${type}`;
+            element.style.display = 'block';
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+
+        function displayStudentResults(student) {
+            const resultsDiv = document.getElementById('student-results');
+            const studentResults = results.filter(r => r.studentId === student.id);
+
+
+let html =`
+                <div class="student-info">
+                    <div class="student-photo">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=400&q=80" alt="Student Photo">
+                    </div>
+                    <div class="student-details">
+                        <h3>${student.name}</h3>
+                        <p><strong>Grade:</strong> ${student.grade}</p>
+                    <p><strong>Student ID:</strong> KEA-2023-${student.id.toString().padStart(4, '0')}</p>
+                    </div>
+                </div>
+            `;
+            
+            if (studentResults.length > 0) {
+                html +=` 
+                    <table class="results-table">
+                        <thead>
+                            <tr>
+                                <th>Subject</th>
+                                <th>Score</th>
+                                <th>Grade</th>
+                                <th>Term</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                `;
+                
+                studentResults.forEach(result => {
+                    let grade = '';
+                    if (result.score >= 90) grade = 'A+';
+                    else if (result.score >= 80) grade = 'A';
+                    else if (result.score >= 70) grade = 'B';
+                    else if (result.score >= 60) grade = 'C';
+                    else grade = 'F';
+                    
+                    html +=` 
+                        <tr>
+                            <td>${result.subject}</td>
+                            <td>${result.score}%</td>
+                            <td>${grade}</td>
+                            <td>${result.term}</td>
+                        </tr>
+                   ` ;
+                });
+                
+                html +=` </tbody></table>`;
+            } else {
+                html += `<p>No results available for this student yet.</p>`;
+            }
+            
+            resultsDiv.innerHTML = html;
+            resultsDiv.style.display = 'block';
+        }
+
+        function populateStudentsTable() {
+            const tbody = document.getElementById('students-table-body');
+            tbody.innerHTML = '';
+            
+            students.forEach(student => {
+                const tr = document.createElement('tr');
+                tr.innerHTML =` 
+                    <td>KEA-2023-${student.id.toString().padStart(4, '0')}</td>
+                    <td>${student.name}</td>
+                    <td>${student.grade}</td>
+                    <td>${student.parentUsername}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit-btn" data-id="${student.id}">Edit</button>
+                            <button class="action-btn delete-btn" data-id="${student.id}">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function populateResultsTable() {
+            const tbody = document.getElementById('results-table-body');
+            tbody.innerHTML = '';
+            
+            results.forEach(result => {
+                const student = students.find(s => s.id === result.studentId);
+                const studentName = student ? student.name : 'Unknown';
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>KEA-2023-${result.studentId.toString().padStart(4, '0')}</td>
+                    <td>${studentName}</td>
+                    <td>${result.subject}</td>
+                    <td>${result.score}%</td>
+
+
+<td>${result.term}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn edit-btn" data-id="${result.id}">Edit</button>
+                            <button class="action-btn delete-btn" data-id="${result.id}">Delete</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function populateStudentDropdown() {
+            const dropdown = document.getElementById('result-student');
+            dropdown.innerHTML = '<option value="">Select Student</option>';
+            
+            students.forEach(student => {
+                const option = document.createElement('option');
+                option.value = student.id;
+                option.textContent = `${student.name} (${student.grade})`;
+                dropdown.appendChild(option);
+            });
+        }
+
+        // Initialize the page
+        populateStudentsTable();
+        populateResultsTable();
+        populateStudentDropdown();
+    </script>
+</body>
+</html>
